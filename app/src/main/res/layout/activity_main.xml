@@ -24,6 +24,14 @@
         android:text="Serial Number : "
         android:textSize="18sp" />
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_width="wrap_content"
+        android:text="IMEI : "
+        android:textSize="18sp" />
+
     <Button
         android:id="@+id/button1"
         android:layout_height="wrap_content"
@@ -37,5 +45,12 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="Serial Number"
+        android:enabled="false"/>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="IMEI"
         android:enabled="false"/>
 </LinearLayout>

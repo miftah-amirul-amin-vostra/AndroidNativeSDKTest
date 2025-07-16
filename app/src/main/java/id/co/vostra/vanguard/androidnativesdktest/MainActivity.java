@@ -14,13 +14,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import id.co.vostra.vanguard.dpc.Vanguard_SDK;
-import id.co.vostra.vanguard.sdk.VanguardService;
-import id.co.vostra.vanguard.sdk.VanguardServiceCallback;
+import id.co.vostra.vanguard.sdk.VanguardAgent;
+import id.co.vostra.vanguard.sdk.VanguardAgentCallback;
 
 
 public class MainActivity extends AppCompatActivity {
-    TextView textView1, textView2;
-    Button button1, button2;
+    TextView textView1, textView2, textView3;
+    Button button1, button2, button3;
     Vanguard_SDK vanguardSdk;
 
     @Override
@@ -37,16 +37,19 @@ public class MainActivity extends AppCompatActivity {
         // Inisialisasi view
         textView1 = findViewById(R.id.textView1);
         textView2 = findViewById(R.id.textView2);
+        textView3 = findViewById(R.id.textView3);
         button1 = findViewById(R.id.button1);
         button2 = findViewById(R.id.button2);
+        button3 = findViewById(R.id.button3);
 
-        VanguardService vanguardService = new VanguardService(getApplicationContext());
-        vanguardService.connectToService(new VanguardServiceCallback() {
+        VanguardAgent vanguardService = new VanguardAgent(getApplicationContext());
+        vanguardService.connectToVanguardAgent(new VanguardAgentCallback() {
             @Override
             public void onConnected(Vanguard_SDK vanguardSdk) {
                 MainActivity.this.vanguardSdk = vanguardSdk;
                 button1.setEnabled(true);
                 button2.setEnabled(true);
+                button3.setEnabled(true);
                 Toast.makeText(MainActivity.this, "Service connected", Toast.LENGTH_SHORT).show();
             }
 
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailed(Exception e) {
                 button1.setEnabled(false);
                 button2.setEnabled(false);
+                button3.setEnabled(false);
                 vanguardSdk = null;
                 Toast.makeText(MainActivity.this, "Service disconnected, message : " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -77,6 +81,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     textView2.setText(vanguardSdk.getDeviceSerialNumber());
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        // Aksi saat tombol 2 diklik
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    textView3.setText(vanguardSdk.getImei());
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
                 }
